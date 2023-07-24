@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Posts_&amp;_Comments</string>
+    <string name="test_post_body">Post Body</string>
+    <string name="test_post_title">Post Title</string>
+    <string name="fab_description">Floating action Button</string>
+    <string name="commenter_s_email">commenter\'s email</string>
+    <string name="Commenter_name">commenter\'s name</string>
+    <string name="comment_body">comment body</string>
+    <string name="comment">New Comment</string>
+    <string name="post">Post</string>
+    <string name="write_your_comment_here">Add your comment...</string>
+</resources>
