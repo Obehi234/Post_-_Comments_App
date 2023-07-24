@@ -7,9 +7,9 @@ import retrofit2.http.Path
 
 interface ApiService {
     @GET("posts")
-    suspend fun getPosts() : List<PostItem>
+    suspend fun getPosts(): List<PostItem>
 
     @GET("posts/{postId}/comments")
-    suspend fun getComments(@Path("postId")postId : Int) : List<CommentItem>
+    suspend fun getComments(@Path("postId") postId: Int): List<CommentItem>
 
 }

@@ -15,4 +15,5 @@
     <color name="overlay">#afa7a7</color>
     <color name="space_cadet">#1B264F</color>
     <color name="jet">#302b27</color>
+    <color name="comment_color">#0E0E0E</color>
 </resources>

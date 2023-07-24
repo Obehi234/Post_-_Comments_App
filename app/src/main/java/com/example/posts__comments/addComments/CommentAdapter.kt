@@ -10,7 +10,8 @@ import com.example.posts__comments.R
 import com.example.posts__comments.addComments.model.CommentItem
 import com.example.posts__comments.databinding.CommentRowItemBinding
 
-class CommentAdapter: ListAdapter<CommentItem, CommentAdapter.CommentViewHolder>(CommentDiffUtilCallback()) {
+class CommentAdapter :
+    ListAdapter<CommentItem, CommentAdapter.CommentViewHolder>(CommentDiffUtilCallback()) {
 
     class CommentViewHolder(val binding: CommentRowItemBinding) : ViewHolder(binding.root)
     class CommentDiffUtilCallback : DiffUtil.ItemCallback<CommentItem>() {
@@ -30,6 +31,7 @@ class CommentAdapter: ListAdapter<CommentItem, CommentAdapter.CommentViewHolder>
         R.color.icon_lightBlue,
         R.color.icon_tan
     )
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
         val inflater = ContextCompat.getSystemService(
             parent.context,

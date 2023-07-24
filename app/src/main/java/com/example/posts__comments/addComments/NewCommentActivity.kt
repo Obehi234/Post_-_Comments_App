@@ -24,18 +24,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NewCommentActivity : AppCompatActivity() {
-    private val commentViewModel by lazy {CommentViewModel()}
+    private val commentViewModel by lazy { CommentViewModel() }
     private var _binding: ActivityNewCommentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var  add_comment_window_bg : LinearLayout
-    private lateinit var  add_comment_text_bg : RelativeLayout
-    private lateinit var newCommentTextEdit : EditText
+    private lateinit var add_comment_window_bg: LinearLayout
+    private lateinit var add_comment_text_bg: RelativeLayout
+    private lateinit var newCommentTextEdit: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityNewCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = "Add Comment"
         setActivityStyle()
         newCommentTextEdit = binding.commentEditText
         val addCommentButton = binding.submitButton
@@ -43,26 +44,24 @@ class NewCommentActivity : AppCompatActivity() {
     }
 
     private fun setUpSubmitButton() {
-           val newCommentText = newCommentTextEdit.text.toString().trim()
-            val postId = intent.getIntExtra("postId", -1)
-            val newCommentItem = CommentItem(id = 0, postId = postId, name = "", email = "", body = newCommentText)
-            Log.d("CHECK_DB", "$newCommentItem - $postId")
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (newCommentText.isNotEmpty() && postId != -1) {
-                    commentViewModel.saveSingleCommentToDatabase(newCommentItem)
-                }
+        val newCommentText = newCommentTextEdit.text.toString().trim()
+        val postId = intent.getIntExtra("postId", -1)
+        val newCommentItem =
+            CommentItem(id = 0, postId = postId, name = "", email = "", body = newCommentText)
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (newCommentText.isNotEmpty() && postId != -1) {
+                commentViewModel.saveSingleCommentToDatabase(newCommentItem)
             }
-            binding.commentEditText.text.clear()
-            val resultIntent = Intent()
-            resultIntent.putExtra("postId",postId)
-            Log.d("CHECK_ID_FINAL", "$postId")
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
         }
+        binding.commentEditText.text.clear()
+        val resultIntent = Intent()
+        resultIntent.putExtra("postId", postId)
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+    }
 
 
     private fun setActivityStyle() {
-        // Make the background full screen, over status bar
         add_comment_window_bg = binding.addCommentWindowBg
         add_comment_text_bg = binding.addCommentTextBg
         window.decorView.systemUiVisibility =
@@ -72,8 +71,6 @@ class NewCommentActivity : AppCompatActivity() {
         winParams.flags =
             winParams.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
         this.window.attributes = winParams
-
-        // Fade animation for the background of Popup Window
         val alpha = 100 // between 0-255
         val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#1B264F"), alpha)
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), Color.TRANSPARENT, alphaColor)
@@ -82,12 +79,9 @@ class NewCommentActivity : AppCompatActivity() {
             add_comment_window_bg.setBackgroundColor(animator.animatedValue as Int)
         }
         colorAnimation.start()
-
         add_comment_window_bg.alpha = 0f
         add_comment_window_bg.animate().alpha(1f).setDuration(500)
             .setInterpolator(DecelerateInterpolator()).start()
-
-        // Close window when you tap on the dim background
         add_comment_window_bg.setOnClickListener { onBackPressed() }
         add_comment_text_bg.setOnClickListener { /* Prevent activity from closing when you tap on the popup's window background */ }
     }
